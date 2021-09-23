@@ -75,7 +75,7 @@ toc
 
 
 
-new_faces_filepaths= ["Caras/Comparar/daniel_4.png";"Caras/Comparar/tavo_16.png";];
+new_faces_filepaths= ["Caras/Comparar/daniel_4.png";"Caras/Comparar/tavo_16.png";"Caras/Comparar/joseph_1.png";];
 n_faces= size(new_faces_filepaths)(1);
 
 
