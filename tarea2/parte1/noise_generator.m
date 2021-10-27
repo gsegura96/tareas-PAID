@@ -5,7 +5,8 @@ pkg load image
 pkg load video
 
 V = VideoReader('paid.mp4')
-fr = V.NumberOfFrames
+##fr = V.NumberOfFrames
+fr = floor(V.Duration*V.FrameRate);
 m = V.Height
 n = V.Width
 
@@ -18,11 +19,14 @@ Y = uint8(zeros(new_m,new_n,1,fr));
 % Procesamiento video
 for k = 1:fr-15;
   ZI = rgb2gray(imresize(readFrame(V),[new_m,new_n]));
- 
+  Y(:,:,1,k) = ZI(:,:,:);
 ##  Y(:,:,1,k) = 255 - ZI(:,:,1);
 ##  Y(:,:,2,k) = 255 - ZI(:,:,2);
 ##  Y(:,:,3,k) = 255 - ZI(:,:,3);
-  Y(:,:,k) = imnoise(ZI(:,:,:),"salt & pepper");
+endfor
+
+for k = 1:fr-15;
+  Y(:,:,k) = imnoise(Y(:,:,k),"salt & pepper");
   imshow(uint8(Y(:,:,:,k)));
   pause(0.001);
 endfor
