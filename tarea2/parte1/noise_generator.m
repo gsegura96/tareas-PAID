@@ -26,7 +26,7 @@ for k = 1:fr-15;
 endfor
 
 for k = 1:fr-15;
-  Y(:,:,k) = imnoise(Y(:,:,k),"salt & pepper");
+##  Y(:,:,1,k) = imnoise(Y(:,:,:),"salt & pepper");
   imshow(uint8(Y(:,:,:,k)));
   pause(0.001);
 endfor
