@@ -33,43 +33,56 @@ function median_value = mvdm(x, y, z)
     median_value = vector(2);
   endif
 endfunction
-
-
-
-for k=1:fr
-##  imshow(uint8(Y(:,:,k)));
-##  pause(0.001);
-  k
   
+function Y2 = md_median_filter(Y)
+  [m,n] = size(Y);
+  Y2 = uint8(zeros(m,n,1));
   for i = 2:m-1
     for j = 2:n-1
-      pixel = Y(i, j, k);
+      pixel = Y(i, j);
       if pixel == 0 || pixel == 255;
-        M1 = mvdm(Y(i-1,j-1,k),Y(i-1,j,k),Y(i-1,j+1,k));
-        M2 = mvdm(Y(i,j-1,k),Y(i,j,k),Y(i,j+1,k));
-        M3 = mvdm(Y(i+1,j-1,k),Y(i+1,j,k),Y(i+1,j+1,k));
+        M1 = mvdm(Y(i-1,j-1),Y(i-1,j),Y(i-1,j+1));
+        M2 = mvdm(Y(i,j-1),Y(i,j),Y(i,j+1));
+        M3 = mvdm(Y(i+1,j-1),Y(i+1,j),Y(i+1,j+1));
         median_value = mvdm(M1,M2,M3);
         if median_value == 0 || median_value == 255;
-          disp("blanco")
+          M1 = median([Y(i-2,j-2),Y(i-2,j-1),Y(i-2,j),Y(i-2,j+1),Y(i-2,j+2)]);
+          M2 = median([Y(i-1,j-2),Y(i-1,j-1),Y(i-1,j),Y(i-1,j+1),Y(i-1,j+2)]);
+          M3 = median([Y(i,j-2),Y(i,j-1),Y(i,j),Y(i,j+1),Y(i,j+2)]);
+          M4 = median([Y(i+1,j-2),Y(i+1,j-1),Y(i+1,j),Y(i+1,j+1),Y(i+1,j+2)]);
+          M5 = median([Y(i+2,j-2),Y(i+2,j-1),Y(i+2,j),Y(i+2,j+1),Y(i+2,j+2)]);
+          median_value = median([M1,M2,M3,M4,M5]);
+          Y2(i,j) = median_value;
         elseif
-          Y2(i,j,k) = median_value;
+          Y2(i,j) = median_value;
         endif
       else
-        Y2(i,j,k) = pixel;
+        Y2(i,j) = pixel;
       endif
     endfor
   endfor
-  
+endfunction
+ 
+function Y1 = fast_median_filter(Y)
+  [m,n] = size(Y);
+  Y1 = uint8(zeros(m,n,1));
   for i = 2:m-1
-    col1 = median([Y(i-1,1,k),Y(i,1,k),Y(i+1,1,k)]);
-    col2 = median([Y(i-1,2,k),Y(i,2,k),Y(i+1,2,k)]);
+    col1 = median([Y(i-1,1),Y(i,1),Y(i+1,1)]);
+    col2 = median([Y(i-1,2),Y(i,2),Y(i+1,2)]);
     for j = 3:n-1
-      col3 = median([Y(i-1,j,k),Y(i,j,k),Y(i+1,j,k)]);
-      Y1(i,j,k) = median([col1,col2,col3]);
+      col3 = median([Y(i-1,j),Y(i,j),Y(i+1,j)]);
+      Y1(i,j) = median([col1,col2,col3]);
       col1 = col2;
       col2 = col3;
     endfor
   endfor
+endfunction
+
+for k=1:fr
+  k
+
+  Y1(:,:,1,k) = fast_median_filter(Y(:,:,1,k));
+  Y2(:,:,1,k) = md_median_filter(Y(:,:,1,k));
 
   subplot(1,3,1)
   imshow(uint8(Y(:,:,:,k)));
@@ -77,7 +90,7 @@ for k=1:fr
   imshow(uint8(Y1(:,:,:,k)));
   subplot(1,3,2)
   imshow(uint8(Y2(:,:,:,k)));
-  pause(0.001);
+  pause(1);
   writeVideo(ruido, Y(:,:,k));
   writeVideo(video1, Y1(:,:,k));
   writeVideo(video2, Y2(:,:,k));
