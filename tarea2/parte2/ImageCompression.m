@@ -19,6 +19,7 @@ function [ tag,u,p, original_len] = arith_enc(input_data)
    
    % length of the string
    len = length(input_data);
+   
 
    % get unique characters from the string
    u = unique(input_data);
@@ -163,7 +164,7 @@ endfunction
 
 function deminimized_matrix = deminimize_matrix_size(minimized_matrix,w, limited_data)
     deminimized_matrix = [];
-    length(minimized_matrix)
+    length(minimized_matrix);
     m = length(limited_data);
     for i = 1:length(minimized_matrix)
         S1=1; S2=1; S3=1; 
@@ -462,29 +463,57 @@ function result_image = decompress_image(M, N, LFC, imaginary_blocks, real_block
 end
 
 
+% I_color = imread("WingedFigure.jpg");
+% A = I_color(:,:,1);
+% A =im2double(A)*255;
+% A = A(1:300,1:300);
+% size(A)
+% imshow(A, [0 255]);
+
+
+%  w = generate_random_weights(3)
+% [LFC, real_blocks, imaginary_blocks] = imageCompression(A, w, quantization=5 );
+
+
+% size(LFC)
+% size(real_blocks) 
+% size(imaginary_blocks)
+
+
+% [M N] = size(A);
+% disp("Decompressing image...");
+
+% result_image = decompress_image(M, N, LFC, imaginary_blocks, real_blocks,w, quantization=5);
+
+% imshow(result_image, [0 255]);
+
+function result_image = ImageCompressionMain( A, quantization = 5)
+    [M N] = size(A);
+    w = generate_random_weights(3)
+    [LFC, real_blocks, imaginary_blocks] = imageCompression(A, w, quantization=5 );
+    result_image = decompress_image(M, N, LFC, imaginary_blocks, real_blocks,w, quantization=5);
+endfunction
+
+
+function ImageCompressionSaveImage( A, quantization = 5 , filename= 'images_compressed.mat')
+    [M N] = size(A);
+    w = generate_random_weights(3)
+    [LFC, real_blocks, imaginary_blocks] = imageCompression(A, w, quantization=5 );
+    save(filename, 'N', 'M', 'w', 'LFC','real_blocks', 'imaginary_blocks', fmt='-mat');
+    % result_image = decompress_image(M, N, LFC, imaginary_blocks, real_blocks,w, quantization=5);
+endfunction
+
+
 
 I_color = imread("WingedFigure.jpg");
 A = I_color(:,:,1);
 A =im2double(A)*255;
 A = A(1:300,1:300);
 size(A)
-imshow(A, [0 255]);
+
+result_image = ImageCompressionMain( A, quantization = 5);
+% imshow(A, [0 255]);
 
 
- w = generate_random_weights(3)
-[LFC, real_blocks, imaginary_blocks] = imageCompression(A, w, quantization=5 );
-
-
-size(LFC)
-size(real_blocks) 
-size(imaginary_blocks)
-
-
-[M N] = size(A);
-disp("Decompressing image...");
-
-result_image = decompress_image(M, N, LFC, imaginary_blocks, real_blocks,w, quantization=5);
-
-imshow(result_image, [0 255]);
 
 
