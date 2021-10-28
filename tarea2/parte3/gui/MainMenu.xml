@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dialog Color="[0.941 0.941 0.941]" HPosition="center" Name="MainMenu" Position="[541 615 664 296]" Resize="off" VPosition="center" windowStyle="normal">
+    <GlobalSrc>%
+% El código fuente escrito aquí será ejecutado cuando
+% la ventana se haga visible. Funciona como el evento 'onLoad' de otros lenguajes.
+%
+</GlobalSrc>
+    <uiControl class="buttonCtrl" BackgroundColor="[0.941 0.941 0.941]" FontAngle="normal" FontName="Arial" FontSize="10" FontWeight="normal" ForegroundColor="[0.000 0.000 0.000]" GenerateCallBack="true" Name="Button_P1" Position="[60 39 213 122]" String="Parte 1: Filtrado" TooltipString="">% El código que se indique aquí será ejecutado cuando el usuario presione en el botón.
+% Por defecto, todos los eventos están desactivdados, para activarlos debe activar
+% propertie 'generateCallback' from the properties editor
+
+P1();</uiControl>
+    <uiControl class="buttonCtrl" BackgroundColor="[0.941 0.941 0.941]" FontAngle="normal" FontName="Arial" FontSize="10" FontWeight="normal" ForegroundColor="[0.000 0.000 0.000]" GenerateCallBack="true" Name="Button_P2" Position="[375 39 213 122]" String="Parte 2: Compresión" TooltipString="">% El código que se indique aquí será ejecutado cuando el usuario presione en el botón.
+% Por defecto, todos los eventos están desactivdados, para activarlos debe activar
+% propertie 'generateCallback' from the properties editor
+
+P2();</uiControl>
+    <uiControl class="buttonCtrl" BackgroundColor="[0.941 0.941 0.941]" FontAngle="normal" FontName="Arial" FontSize="10" FontWeight="normal" ForegroundColor="[0.000 0.000 0.000]" GenerateCallBack="true" Name="Button_11" Position="[61 180 526 40]" String="Ayuda" TooltipString="">% El código que se indique aquí será ejecutado cuando el usuario presione en el botón.
+% Por defecto, todos los eventos están desactivdados, para activarlos debe activar
+% propertie 'generateCallback' from the properties editor</uiControl>
+</dialog>

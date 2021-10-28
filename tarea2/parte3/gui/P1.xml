@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dialog Color="[0.941 0.941 0.941]" HPosition="center" Name="P1" Position="[497 676 685 637]" Resize="off" VPosition="center" windowStyle="normal">
+    <GlobalSrc>%
+% El código fuente escrito aquí será ejecutado cuando
+% la ventana se haga visible. Funciona como el evento 'onLoad' de otros lenguajes.
+%
+
+pkg load image;
+
+
+set(P1.BDownload, 'Enable', 'off');
+
+set(P1.F1, 'Enable', 'off');
+set(P1.F2, 'Enable', 'off');
+set(P1.F3, 'Enable', 'off');
+
+
+</GlobalSrc>
+    <uiControl class="groupPanel" BackgroundColor="[0.941 0.941 0.941]" BorderWidth="1" FontAngle="normal" FontName="Arial" FontSize="10" FontWeight="normal" ForegroundColor="[0.000 0.000 0.000]" Name="GroupPanel_1" Position="[15 85 640 54]" Title="Operaciones" TitlePosition="lefttop">
+        <ContainerSrc/>
+        <uiControl class="buttonCtrl" BackgroundColor="[0.941 0.941 0.941]" FontAngle="normal" FontName="Arial" FontSize="10" FontWeight="normal" ForegroundColor="[0.000 0.000 0.000]" GenerateCallBack="false" Name="Button_7" Position="[30 110 189 22]" String="Filtro FMFA" TooltipString="">% El código que se indique aquí será ejecutado cuando el usuario presione en el botón.
+% Por defecto, todos los eventos están desactivdados, para activarlos debe activar
+% propertie 'generateCallback' from the properties editor</uiControl>
+    </uiControl>
+    <uiControl class="textCtrl" BackgroundColor="[0.941 0.941 0.941]" FontAngle="normal" FontName="Arial" FontSize="10" FontWeight="normal" ForegroundColor="[0.000 0.000 0.000]" GenerateCallBack="false" HorizontalAlignment="left" isAutoSize="true" Name="Label_2" Position="[15 15 152 19]" String="Filtrado de imágenes" TooltipString=""/>
+    <uiControl class="buttonCtrl" BackgroundColor="[0.941 0.941 0.941]" FontAngle="normal" FontName="Arial" FontSize="10" FontWeight="normal" ForegroundColor="[0.000 0.000 0.000]" GenerateCallBack="true" Name="BLoad" Position="[15 45 137 28]" String="Cargar imagen" TooltipString="">% El código que se indique aquí será ejecutado cuando el usuario presione en el botón.
+% Por defecto, todos los eventos están desactivdados, para activarlos debe activar
+% propertie 'generateCallback' from the properties editor
+global image_full_path;
+global I;
+
+[fname, fpath, fltidx] = uigetfile();
+
+image_full_path = fullfile(fpath, fname);
+
+set(P1.ImageRoute, 'String', image_full_path);
+set(P1.F1, 'Enable', 'on');
+set(P1.F2, 'Enable', 'on');
+set(P1.F3, 'Enable', 'on');
+
+set(P1.F1,'BackgroundColor',[0.941 0.941 0.941]);
+set(P1.F2,'BackgroundColor',[0.941 0.941 0.941]);
+set(P1.F3,'BackgroundColor',[0.941 0.941 0.941]);</uiControl>
+    <uiControl class="editCtrl" BackgroundColor="[1.000 1.000 1.000]" FontAngle="normal" FontName="Arial" FontSize="10" FontWeight="normal" ForegroundColor="[0.000 0.000 0.000]" GenerateCallBack="false" HorizontalAlignment="left" Name="ImageRoute" Position="[160 50 497 22]" String="" TooltipString="">% This code will be executed when the control lost focus and text has 
+% been changed or when press the &quot;enter&quot; key.
+% Por defecto, todos los eventos están desactivdados, para activarlos debe activar
+% la propiead have callback desde el editor de propiedades</uiControl>
+    <uiControl class="buttonCtrl" BackgroundColor="[0.678 0.678 0.678]" FontAngle="normal" FontName="Arial" FontSize="10" FontWeight="normal" ForegroundColor="[0.000 0.000 0.000]" GenerateCallBack="true" Name="F1" Position="[25 105 189 22]" String="Filtro Mediana" TooltipString="">% El código que se indique aquí será ejecutado cuando el usuario presione en el botón.
+% Por defecto, todos los eventos están desactivdados, para activarlos debe activar
+% propertie 'generateCallback' from the properties editor
+global image_full_path;
+global I;
+
+I = imread(image_full_path);
+disp('Iniciando filtrado');
+I = fast_median_filter(I);
+disp('Filtrado finalizado');
+axes(P1.Results);
+imshow(I);
+
+set(P1.BDownload, 'Enable', 'on');
+set(P1.BDownload,'BackgroundColor',[0.941 0.941 0.941])
+</uiControl>
+    <uiControl class="buttonCtrl" BackgroundColor="[0.686 0.686 0.686]" FontAngle="normal" FontName="Arial" FontSize="10" FontWeight="normal" ForegroundColor="[0.000 0.000 0.000]" GenerateCallBack="true" Name="F2" Position="[240 105 189 22]" String="Filtro FMFA" TooltipString="">% El código que se indique aquí será ejecutado cuando el usuario presione en el botón.
+% Por defecto, todos los eventos están desactivdados, para activarlos debe activar
+% propertie 'generateCallback' from the properties editor
+
+% El código que se indique aquí será ejecutado cuando el usuario presione en el botón.
+% Por defecto, todos los eventos están desactivdados, para activarlos debe activar
+% propertie 'generateCallback' from the properties editor
+global image_full_path;
+global I;
+
+I = imread(image_full_path);
+disp('Iniciando filtrado');
+I = fast_median_filter(I);
+disp('Filtrado finalizado');
+axes(P1.Results);
+imshow(I);
+
+set(P1.BDownload, 'Enable', 'on');
+set(P1.BDownload,'BackgroundColor',[0.941 0.941 0.941])</uiControl>
+    <uiControl class="buttonCtrl" BackgroundColor="[0.686 0.686 0.686]" FontAngle="normal" FontName="Arial" FontSize="10" FontWeight="normal" ForegroundColor="[0.000 0.000 0.000]" GenerateCallBack="true" Name="F3" Position="[450 105 189 22]" String="Filtro HPDBMF" TooltipString="">% El código que se indique aquí será ejecutado cuando el usuario presione en el botón.
+% Por defecto, todos los eventos están desactivdados, para activarlos debe activar
+% propertie 'generateCallback' from the properties editor
+
+% El código que se indique aquí será ejecutado cuando el usuario presione en el botón.
+% Por defecto, todos los eventos están desactivdados, para activarlos debe activar
+% propertie 'generateCallback' from the properties editor
+global image_full_path;
+global I;
+
+I = imread(image_full_path);
+disp('Iniciando filtrado');
+I = md_median_filter(I);
+disp('Filtrado finalizado');
+axes(P1.Results);
+imshow(I);
+
+set(P1.BDownload, 'Enable', 'on');
+set(P1.BDownload,'BackgroundColor',[0.941 0.941 0.941])</uiControl>
+    <uiControl class="groupPanel" BackgroundColor="[0.941 0.941 0.941]" BorderWidth="1" FontAngle="normal" FontName="Arial" FontSize="10" FontWeight="normal" ForegroundColor="[0.000 0.000 0.000]" Name="Results" Position="[15 150 640 385]" Title="Resultado" TitlePosition="lefttop">
+        <ContainerSrc/>
+    </uiControl>
+    <uiControl class="buttonCtrl" BackgroundColor="[0.686 0.686 0.686]" FontAngle="normal" FontName="Arial" FontSize="10" FontWeight="normal" ForegroundColor="[0.000 0.000 0.000]" GenerateCallBack="true" Name="BDownload" Position="[15 545 640 35]" String="Descargar imagen" TooltipString="">% El código que se indique aquí será ejecutado cuando el usuario presione en el botón.
+% Por defecto, todos los eventos están desactivdados, para activarlos debe activar
+% propertie 'generateCallback' from the properties editor
+global I;
+
+[file,path,indx] = uiputfile('imagen_salida.png');
+
+
+imwrite(I, fullfile(path, file));</uiControl>
+</dialog>
