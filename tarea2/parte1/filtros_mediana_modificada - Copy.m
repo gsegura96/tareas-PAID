@@ -14,16 +14,16 @@ B = zeros(h, w);
 C = zeros(h, w);
 
 
-##for i = 2:h-1
-##  col1 = median([A(i-1,1),A(i,1),A(i+1,1)]);
-##  col2 = median([A(i-1,2),A(i,2),A(i+1,2)]);
-##  for j = 3:w-1
-##    col3 = median([A(i-1,j),A(i,j),A(i+1,j)]);
-##    B(i,j) = median([col1,col2,col3]);
-##    col1 = col2;
-##    col2 = col3;
-##  endfor
-##endfor
+for i = 2:h-1
+  col1 = median([A(i-1,1),A(i,1),A(i+1,1)]);
+  col2 = median([A(i-1,2),A(i,2),A(i+1,2)]);
+  for j = 3:w-1
+    col3 = median([A(i-1,j),A(i,j),A(i+1,j)]);
+    B(i,j) = median([col1,col2,col3]);
+    col1 = col2;
+    col2 = col3;
+  endfor
+endfor
 
 function median_value = mvdm(x, y, z)
   vector = [x, y, z];

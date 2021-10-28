@@ -4,7 +4,7 @@ close all;
 pkg load image
 pkg load video
 
-V = VideoReader('paid.mp4')
+V = VideoReader('paid2.mp4')
 ##fr = V.NumberOfFrames
 fr = floor(V.Duration*V.FrameRate);
 m = V.Height
@@ -32,7 +32,7 @@ for k = 1:fr-15;
 endfor
 
 % Guardar Video
-video = VideoWriter('video_con_ruido.mp4');
+video = VideoWriter('video.mp4');
 for i=1:fr-15;
   writeVideo(video, Y(:,:,1,i));
 endfor

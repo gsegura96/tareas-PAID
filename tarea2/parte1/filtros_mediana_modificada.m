@@ -99,6 +99,7 @@ function Y2 = md_median_filter(Y)
   endfor
 
   %Parte Central de imagen 
+  last_procesed_pixel = 0;
   for i = 2:m-1
     for j = 2:n-1
       pixel = Y(i, j);
@@ -108,18 +109,24 @@ function Y2 = md_median_filter(Y)
         M3 = mvdm(Y(i+1,j-1),Y(i+1,j),Y(i+1,j+1));
         median_value = mvdm(M1,M2,M3);
         if median_value == 0 || median_value == 255;
-          M1 = median([Y(i-2,j-2),Y(i-2,j-1),Y(i-2,j),Y(i-2,j+1),Y(i-2,j+2)]);
-          M2 = median([Y(i-1,j-2),Y(i-1,j-1),Y(i-1,j),Y(i-1,j+1),Y(i-1,j+2)]);
-          M3 = median([Y(i,j-2),Y(i,j-1),Y(i,j),Y(i,j+1),Y(i,j+2)]);
-          M4 = median([Y(i+1,j-2),Y(i+1,j-1),Y(i+1,j),Y(i+1,j+1),Y(i+1,j+2)]);
-          M5 = median([Y(i+2,j-2),Y(i+2,j-1),Y(i+2,j),Y(i+2,j+1),Y(i+2,j+2)]);
-          median_value = median([M1,M2,M3,M4,M5]);
+          if (i >= 3 && i <= m-3 && j >= 3 && i <= n-3)
+            M1 = median([Y(i-2,j-2),Y(i-2,j-1),Y(i-2,j),Y(i-2,j+1),Y(i-2,j+2)]);
+            M2 = median([Y(i-1,j-2),Y(i-1,j-1),Y(i-1,j),Y(i-1,j+1),Y(i-1,j+2)]);
+            M3 = median([Y(i,j-2),Y(i,j-1),Y(i,j),Y(i,j+1),Y(i,j+2)]);
+            M4 = median([Y(i+1,j-2),Y(i+1,j-1),Y(i+1,j),Y(i+1,j+1),Y(i+1,j+2)]);
+            M5 = median([Y(i+2,j-2),Y(i+2,j-1),Y(i+2,j),Y(i+2,j+1),Y(i+2,j+2)]);
+            median_value = median([M1,M2,M3,M4,M5]);
+            Y2(i,j) = median_value;
+          else
+            Y2(i,j) = last_procesed_pixel;
+          endif
+        else
           Y2(i,j) = median_value;
-        elseif
-          Y2(i,j) = median_value;
+          last_procesed_pixel = median_value;
         endif
       else
         Y2(i,j) = pixel;
+        last_procesed_pixel = pixel;
       endif
     endfor
   endfor
@@ -201,25 +208,27 @@ function Y1 = fast_median_filter(Y)
     endfor
   endfor
 endfunction
-
+tic
 for k=1:fr
   k
   %llamada a los algoritmos de filtrado
   Y1(:,:,1,k) = fast_median_filter(Y(:,:,1,k));
   Y2(:,:,1,k) = md_median_filter(Y(:,:,1,k));
 
-  subplot(1,3,1)
-  imshow(uint8(Y(:,:,:,k)));
-  subplot(1,3,2)
-  imshow(uint8(Y1(:,:,:,k)));
-  subplot(1,3,2)
-  imshow(uint8(Y2(:,:,:,k)));
-  pause(1);
+##  subplot(1,3,1)
+##  imshow(uint8(Y(:,:,:,k)));
+##  subplot(1,3,2)
+##  imshow(uint8(Y1(:,:,:,k)));
+##  subplot(1,3,2)
+##  imshow(uint8(Y2(:,:,:,k)));
+##  pause(1);
+  
   %escritura de videos
   writeVideo(ruido, Y(:,:,k));
   writeVideo(video1, Y1(:,:,k));
   writeVideo(video2, Y2(:,:,k));
 endfor
+toc
 close(ruido);
 close(video1);
 close(video2);
