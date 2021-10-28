@@ -15,9 +15,9 @@ ssim2 = 0;
 ssim3 = 0;
 
 for i=1:fr2
-  Z1 = readFrame(VidLimp);                                %Frames video Original 
-  Z2 = readFrame(VidMed);                                 %Frames video Mediana  
-  Z3 = readFrame(VidAlg2);                               %Frames video HPDBMF
+  Z1 = readFrame(VidLimp);  %Frames video Original 
+  Z2 = readFrame(VidMed); %Frames video Mediana  
+  Z3 = readFrame(VidAlg2);  %Frames video HPDBMF
   
   %Video Original
   [mssim1Z11R, ssim_map] = ssim(Z1(:,:,1), Z1(:,:,1));
