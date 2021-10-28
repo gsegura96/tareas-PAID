@@ -109,7 +109,7 @@ function Y2 = md_median_filter(Y)
         M3 = mvdm(Y(i+1,j-1),Y(i+1,j),Y(i+1,j+1));
         median_value = mvdm(M1,M2,M3);
         if median_value == 0 || median_value == 255;
-          if (i >= 3 && i <= m-3 && j >= 3 && i <= n-3)
+          if (i >= 4 && i <= m-4 && j >= 4 && i <= n-4)
             M1 = median([Y(i-2,j-2),Y(i-2,j-1),Y(i-2,j),Y(i-2,j+1),Y(i-2,j+2)]);
             M2 = median([Y(i-1,j-2),Y(i-1,j-1),Y(i-1,j),Y(i-1,j+1),Y(i-1,j+2)]);
             M3 = median([Y(i,j-2),Y(i,j-1),Y(i,j),Y(i,j+1),Y(i,j+2)]);
