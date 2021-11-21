@@ -397,7 +397,7 @@ function result_image = decompress_image(M, N, LFC, imaginary_blocks, real_block
     cols = floor(N / 4);
     for x = 1:rows
         for y = 1:cols
-        block_index = (x - 1) * 4 + (y - 1) + 1;
+        block_index = (x - 1) * (M / 4) + (y - 1) + 1;
         zero_m_len = real_blocks{block_index}('zero_m_len');
         zero_m_p = real_blocks{block_index}('zero_m_p');
         zero_m_u = real_blocks{block_index}('zero_m_u');
@@ -488,9 +488,11 @@ end
 % imshow(result_image, [0 255]);
 
 function result_image = ImageCompressionMain( A, quantization = 5)
+    disp("Compressing image...");
     [M N] = size(A);
     w = generate_random_weights(3)
     [LFC, real_blocks, imaginary_blocks] = imageCompression(A, w, quantization=5 );
+    disp("Decompressing image...");
     result_image = decompress_image(M, N, LFC, imaginary_blocks, real_blocks,w, quantization=5);
 endfunction
 
@@ -498,21 +500,75 @@ endfunction
 function ImageCompressionSaveImage( A, quantization = 5 , filename= 'images_compressed.mat')
     [M N] = size(A);
     w = generate_random_weights(3)
-    [LFC, real_blocks, imaginary_blocks] = imageCompression(A, w, quantization=5 );
+    [LFC, real_blocks, imaginary_blocks] = imageCompression(A, w, quantization=quantization );
     save(filename, 'N', 'M', 'w', 'LFC','real_blocks', 'imaginary_blocks', fmt='-mat');
     % result_image = decompress_image(M, N, LFC, imaginary_blocks, real_blocks,w, quantization=5);
 endfunction
 
 
-
+tic
 I_color = imread("WingedFigure.jpg");
 A = I_color(:,:,1);
 A =im2double(A)*255;
-A = A(1:300,1:300);
+A = A(201:300,201:300);
 size(A)
 
-result_image = ImageCompressionMain( A, quantization = 5);
-% imshow(A, [0 255]);
+disp("Quantization = 5");
+result_image_5 = ImageCompressionMain( A, quantization = 5);
+toc
+
+imshow(result_image_5, [0 255]);
+psnr_5 = psnr(result_image_5, A);
+disp("PSNR 5: " + psnr_5);
+
+disp("Quantization = 10");
+result_image_10 = ImageCompressionMain( A, quantization = 10);
+disp("Quantization = 15");
+result_image_15 = ImageCompressionMain( A, quantization = 15);
+disp("Quantization = 20");
+result_image_20 = ImageCompressionMain( A, quantization = 20);
+disp("Quantization = 30");
+result_image_30 = ImageCompressionMain( A, quantization = 30);
+
+subplot(2,3,1);
+imshow(A, [0 255]);
+title('Imagen de entrada');
+
+subplot(2,3,2);
+imshow(result_image_5, [0 255]);
+title('Cuantizacion 5');
+
+subplot(2,3,3);
+imshow(result_image_10, [0 255]);
+title('Cuantizacion 10');
+
+subplot(2,3,4);
+imshow(result_image_15, [0 255]);
+title('Cuantizacion 15');
+
+subplot(2,3,5);
+imshow(result_image_20, [0 255]);
+title('Cuantizacion 20');
+
+
+subplot(2,3,6);
+imshow(result_image_30, [0 255]);
+title('Cuantizacion 30');
+
+
+psnr_5 = psnr(result_image_5, A);
+psnr_10 = psnr(result_image_10, A);
+psnr_15 = psnr(result_image_15, A);
+psnr_20 = psnr(result_image_20, A);
+psnr_30 = psnr(result_image_30, A);
+
+disp("PSNR 5: " + psnr_5);
+disp("PSNR 10: " + psnr_10);        
+disp("PSNR 15: " + psnr_15);
+disp("PSNR 20: " + psnr_20);
+disp("PSNR 30: " + psnr_30);
+
+
 
 
 
