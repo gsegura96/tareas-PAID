@@ -12,14 +12,14 @@ function [mask, masked_image_rgb] = create_mask(RGB, tolerance)
     % Convierte RGB a HSV
     I = rgb2hsv(RGB);
 
-    hue_reference = 0.55;
+    hue_reference = 0.6;
     hue_tolerance = tolerance;
 
     % Crea una máscara basada en la distancia del Hue de referencia con una tolerancia
     mask = (hue_distance(I(:, :, 1), hue_reference) <= hue_tolerance);
 
     % Inicializar la salida a partir de la imagen
-    r n m, op[oiop[[zx chjnmk]]] masked_image = I;
+    masked_image = I;
 
     % Separa el valor de Hue de la imagen
     hues = masked_image(:, :, 1);
@@ -58,7 +58,7 @@ global I;
 global tolerance_slider;
 
 % Leer la imagen
-I = imread('blue_wall.jpeg');
+I = imread('daniel2.png');
 
 % Slider para la tolerancia
 tolerance_slider = uicontrol (
