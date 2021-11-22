@@ -19,7 +19,7 @@ function [mask, masked_image_rgb] = create_mask(RGB, tolerance)
     mask = (hue_distance(I(:, :, 1), hue_reference) <= hue_tolerance);
 
     % Inicializar la salida a partir de la imagen
-    masked_image = I;
+    r n m, op[oiop[[zx chjnmk]]] masked_image = I;
 
     % Separa el valor de Hue de la imagen
     hues = masked_image(:, :, 1);
