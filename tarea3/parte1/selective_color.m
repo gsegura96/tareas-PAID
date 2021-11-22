@@ -1,14 +1,13 @@
-clc; clear; 
+clc; clear;
 close all;
 pkg load image;
 
-
 % Función para calcular la distancia de Hues
 function distance = hue_distance(h0, h1)
-    distance = min(abs(h1-h0), 1-abs(h1-h0));
+    distance = min(abs(h1 - h0), 1 - abs(h1 - h0));
 end
 
-function [mask,maskedRGBImage] = create_mask(RGB) 
+function [mask, maskedRGBImage] = create_mask(RGB)
     % Convierte RGB a HSV
     I = rgb2hsv(RGB);
 
@@ -16,7 +15,7 @@ function [mask,maskedRGBImage] = create_mask(RGB)
     hue_tolerance = 0.03;
 
     % Crea una máscara basada en la distancia del Hue de referencia con una tolerancia
-    mask = ( hue_distance(I(:,:,1), hue_reference) <= hue_tolerance );
+    mask = (hue_distance(I(:, :, 1), hue_reference) <= hue_tolerance);
     % Extiende la máscara a 3 canales
     mask_3 = repmat(mask, [1, 1, 3]);
 
@@ -24,7 +23,6 @@ function [mask,maskedRGBImage] = create_mask(RGB)
     gray = rgb2gray(RGB);
     % Extiende escala de grises a 3 canales
     gray_3 = repmat(gray, [1 1 3]);
-
 
     % Inicializar la salida a partir de la imagen RGB
     maskedRGBImage = RGB;
@@ -36,17 +34,16 @@ end;
 
 I = imread('pencils.jpeg');
 
-[mask,maskedRGBImage] = create_mask(I);
+[mask, maskedRGBImage] = create_mask(I);
 
-subplot(1,3,1);
+subplot(1, 3, 1);
 imshow(I);
 title('Imagen original');
 
-subplot(1,3,2);
+subplot(1, 3, 2);
 imshow(mask);
 title('Máscara');
 
-subplot(1,3,3);
+subplot(1, 3, 3);
 imshow(maskedRGBImage);
 title('Imagen con selección de color');
-

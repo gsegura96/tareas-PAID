@@ -8,41 +8,40 @@ function distance = hue_distance(h0, h1)
 end
 
 % Función que crea la máscara basado en selective color
-function [mask, masked_image_rgb] = create_mask(RGB, tolerance)
+function [mask, masked_image_rgb] = create_chroma(bg, fg, tolerance)
     % Convierte RGB a HSV
-    I = rgb2hsv(RGB);
+    fg_hsv = rgb2hsv(fg);
 
-    hue_reference = 0.55;
+    hue_reference = 0.43;
     hue_tolerance = tolerance;
 
     % Crea una máscara basada en la distancia del Hue de referencia con una tolerancia
-    mask = (hue_distance(I(:, :, 1), hue_reference) <= hue_tolerance);
+    mask = (hue_distance(fg_hsv(:, :, 1), hue_reference) <= hue_tolerance);
+    % Extiende la máscara a 3 canales
+    mask_3 = repmat(mask, [1, 1, 3]);
 
-    % Inicializar la salida a partir de la imagen
-    masked_image = I;
+    % Crea una versión en escala de grises de la imagen
+    gray = rgb2gray(fg);
+    % Extiende escala de grises a 3 canales
+    gray_3 = repmat(gray, [1 1 3]);
 
-    % Separa el valor de Hue de la imagen
-    hues = masked_image(:, :, 1);
+    % Inicializar la salida a partir de la imagen RGB
+    masked_image_rgb = fg;
 
-    % Pinta el valor de Hue de la imagen en la máscara
-    hues(mask) = 0.3;
-
-    % Reemplaza el valor de Hue de la imagen con el valor de Hue de la máscara
-    masked_image(:, :, 1) = hues;
-
-    masked_image_rgb = hsv2rgb(masked_image);
-
+    % Aplica la máscara a la imagen
+    masked_image_rgb(mask_3) = bg(mask_3);
 end;
 
 % Función que crea los gráficos
 function plot_image(h, event)
-    global I;
+    global bg;
+    global fg;
     global tolerance_slider;
 
-    [mask, masked_image_rgb] = create_mask(I, get(tolerance_slider, 'value'));
+    [mask, masked_image_rgb] = create_chroma(bg, fg, get(tolerance_slider, 'value'));
 
     subplot(1, 3, 1);
-    imshow(I);
+    imshow(fg);
     title('Imagen original');
 
     subplot(1, 3, 2);
@@ -51,14 +50,16 @@ function plot_image(h, event)
 
     subplot(1, 3, 3);
     imshow(masked_image_rgb);
-    title('Imagen con transferencia de color');
+    title('Imagen con chroma key');
 end
 
-global I;
+global bg;
+global fg;
 global tolerance_slider;
 
 % Leer la imagen
-I = imread('blue_wall.jpeg');
+bg = imread('bg.jpeg');
+fg = imread('fg.jpeg');
 
 % Slider para la tolerancia
 tolerance_slider = uicontrol (
