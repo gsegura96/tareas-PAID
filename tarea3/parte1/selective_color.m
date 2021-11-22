@@ -11,7 +11,7 @@ function [mask, maskedRGBImage] = create_mask(RGB)
     % Convierte RGB a HSV
     I = rgb2hsv(RGB);
 
-    hue_reference = 0.0;
+    hue_reference = 0.6;
     hue_tolerance = 0.03;
 
     % Crea una máscara basada en la distancia del Hue de referencia con una tolerancia
@@ -32,7 +32,7 @@ function [mask, maskedRGBImage] = create_mask(RGB)
 
 end;
 
-I = imread('pencils.jpeg');
+I = imread('tavo_color.jpeg');
 
 [mask, maskedRGBImage] = create_mask(I);
 

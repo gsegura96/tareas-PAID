@@ -13,7 +13,7 @@ function [mask, masked_image_rgb] = create_chroma(bg, fg, tolerance)
     % Convierte RGB a HSV
     fg_hsv = rgb2hsv(fg);
 
-    hue_reference = 0.33;
+    hue_reference = 0.6;
     hue_tolerance = tolerance;
 
     % Crea una máscara basada en la distancia del Hue de referencia con una tolerancia
@@ -44,10 +44,8 @@ function plot_image(fg, mask, masked_image_rgb, frame, frames)
     title('Imagen con chroma key');
 end
 
-% Leer la imagen
-bg = imread('breaking.jpeg');
-
-video = VideoReader('green.mp4');
+% Leer los videos
+video = VideoReader('daniel.mp4');
 frames = video.NumberOfFrames - 1;
 
 video_bg = VideoReader('globe.mp4');
