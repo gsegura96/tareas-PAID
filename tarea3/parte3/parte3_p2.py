@@ -48,13 +48,58 @@ def detectCircles(img,threshold,region,radius = None):
 
     return B[:,R_max:-R_max,R_max:-R_max]
 
-def drawCircles(A, image):
-    ax = plt.subplot(2,2,4);
+def drawCircles(A, image, i):
+    ax = plt.subplot(3,3,i);
     plt.title('Result');
     plt.imshow(image)
     circleCoordinates = np.argwhere(A)
     for r,x,y in circleCoordinates:
       ax.add_patch(Circle((y,x),r,color=(1,0,0),fill=False))
+
+
+
+
+#imagen1 __________
+
+image = cv2.imread("imagen1.png")
+
+edge_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+edge_image = cv2.GaussianBlur(image, (3, 3), 1)
+edge_image = cv2.Canny(edge_image, 100, 300)
+
+res = detectCircles(edge_image,0.29,15,radius=[50,8])
+
+plt.subplot(3,3,1);
+plt.title('Original');
+plt.imshow(image, cmap='gray');
+plt.subplot(3,3,2);
+plt.title('Edge');
+plt.imshow(edge_image, cmap='gray');
+drawCircles(res, image, 3)
+
+
+
+
+#imagen2 __________
+
+image = cv2.imread("imagen2.png")
+
+edge_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+edge_image = cv2.GaussianBlur(image, (3, 3), 1)
+edge_image = cv2.Canny(edge_image, 100, 300)
+
+res = detectCircles(edge_image,0.3,15,radius=[50,10])
+
+plt.subplot(3,3,4);
+plt.title('Original');
+plt.imshow(image, cmap='gray');
+plt.subplot(3,3,5);
+plt.title('Edge');
+plt.imshow(edge_image, cmap='gray');
+drawCircles(res, image, 6)
+
+
+#imagen3 ___________
 
 image = cv2.imread("imagen3.png")
 
@@ -62,26 +107,20 @@ edge_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 edge_image = cv2.GaussianBlur(image, (3, 3), 1)
 edge_image = cv2.Canny(edge_image, 100, 300)
 
-
-#imagen1
-# res = detectCircles(edge_image,0.29,15,radius=[50,8])
-
-#imagen2
-# res = detectCircles(edge_image,0.3,15,radius=[50,10])
-
-#imagen3
 res = detectCircles(edge_image,0.5,15,radius=[50, 15])
 
-
-plt.subplot(2,2,1);
+plt.subplot(3,3,7);
 plt.title('Original');
 plt.imshow(image, cmap='gray');
-
-plt.subplot(2,2,2);
+plt.subplot(3,3,8);
 plt.title('Edge');
 plt.imshow(edge_image, cmap='gray');
+drawCircles(res, image, 9)
 
-drawCircles(res, image)
+
+
+
+
 plt.show()
 
 
