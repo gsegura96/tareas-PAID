@@ -118,9 +118,6 @@ plt.imshow(edge_image, cmap='gray');
 drawCircles(res, image, 9)
 
 
-
-
-
 plt.show()
 
 
