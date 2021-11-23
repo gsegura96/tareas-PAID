@@ -285,6 +285,11 @@ endfunction
 
 function calc_all_alpha_root(input_img, alpha_value=0.5, k=4)
     [img_t_2x2 img_t_2x3 img_t_4x1 img_t_1x4] = image_transformation_all(input_img);
+    imwrite(uint8(img_t_2x2),"results/transform_2x2_img_t.jpg");
+    imwrite(uint8(img_t_2x3),"results/transform_2x3_img_t.jpg");
+    imwrite(uint8(img_t_4x1),"results/transform_4x1_img_t.jpg");
+    imwrite(uint8(img_t_1x4),"results/transform_1x4_img_t.jpg");
+
     ceme_original = calc_ceme(input_img, k);
 
     alpha_root_2x2_img_t = alpha_root_enhancement(img_t_2x2, alpha_value);
@@ -292,6 +297,7 @@ function calc_all_alpha_root(input_img, alpha_value=0.5, k=4)
     eme_original_2x2 = calc_eme(img_t_2x2, k);
     eme_alpha_root_2x2 = calc_eme(alpha_root_2x2_img_t, k);
     ceme_2x2 = calc_ceme(alpha_root_2x2_result, k);
+    imwrite(uint8(alpha_root_2x2_img_t),"results/alpha_root_2x2_img_t.jpg");
     imwrite(uint8(alpha_root_2x2_result),"results/alpha_root_2x2_result.jpg");
 
     alpha_root_2x3_img_t = alpha_root_enhancement(img_t_2x3, alpha_value);
@@ -299,6 +305,7 @@ function calc_all_alpha_root(input_img, alpha_value=0.5, k=4)
     eme_original_2x3 = calc_eme(img_t_2x3, k);
     eme_alpha_root_2x3 = calc_eme(alpha_root_2x3_img_t, k);
     ceme_2x3 = calc_ceme(alpha_root_2x3_result, k);
+    imwrite(uint8(alpha_root_2x3_img_t),"results/alpha_root_2x3_img_t.jpg");
     imwrite(uint8(alpha_root_2x3_result),"results/alpha_root_2x3_result.jpg");
 
     alpha_root_4x1_img_t = alpha_root_enhancement(img_t_4x1, alpha_value);
@@ -306,6 +313,7 @@ function calc_all_alpha_root(input_img, alpha_value=0.5, k=4)
     eme_original_4x1 = calc_eme(img_t_4x1, k);
     eme_alpha_root_4x1 = calc_eme(alpha_root_4x1_img_t, k);
     ceme_4x1 = calc_ceme(alpha_root_4x1_result, k);
+    imwrite(uint8(alpha_root_4x1_img_t),"results/alpha_root_4x1_img_t.jpg");
     imwrite(uint8(alpha_root_4x1_result),"results/alpha_root_4x1_result.jpg");
 
     alpha_root_1x4_img_t = alpha_root_enhancement(img_t_1x4, alpha_value);
@@ -313,6 +321,7 @@ function calc_all_alpha_root(input_img, alpha_value=0.5, k=4)
     eme_original_1x4 = calc_eme(img_t_1x4, k);
     eme_alpha_root_1x4 = calc_eme(alpha_root_1x4_img_t, k);
     ceme_1x4 = calc_ceme(alpha_root_1x4_result, k);
+    imwrite(uint8(alpha_root_1x4_img_t),"results/alpha_root_1x4_img_t.jpg");
     imwrite(uint8(alpha_root_1x4_result),"results/alpha_root_1x4_result.jpg");
 
     printf("################ Alpha root enhancement ################\n");
@@ -382,6 +391,11 @@ endfunction
 
 function calc_all_histogram_equalization_enhancement(input_img, k=4)
     [img_t_2x2 img_t_2x3 img_t_4x1 img_t_1x4] = image_transformation_all(input_img);
+    imwrite(uint8(img_t_2x2),"results/transform_2x2_img_t.jpg");
+    imwrite(uint8(img_t_2x3),"results/transform_2x3_img_t.jpg");
+    imwrite(uint8(img_t_4x1),"results/transform_4x1_img_t.jpg");
+    imwrite(uint8(img_t_1x4),"results/transform_1x4_img_t.jpg");
+
     ceme_original = calc_ceme(input_img, k);
 
     histeq_2x2_img_t = histeq(uint8(img_t_2x2))*255;
@@ -389,6 +403,7 @@ function calc_all_histogram_equalization_enhancement(input_img, k=4)
     eme_original_2x2 = calc_eme(img_t_2x2, k);
     eme_histeq_2x2 = calc_eme(histeq_2x2_img_t, k);
     ceme_2x2 = calc_ceme(histeq_2x2_result, k);
+    imwrite(uint8(histeq_2x2_img_t),"results/histeq_2x2_img_t.jpg");
     imwrite(uint8(histeq_2x2_result),"results/histeq_2x2_result.jpg");
 
 
@@ -397,6 +412,7 @@ function calc_all_histogram_equalization_enhancement(input_img, k=4)
     eme_original_2x3 = calc_eme(img_t_2x3, k);
     eme_histeq_2x3 = calc_eme(histeq_2x3_img_t, k);
     ceme_2x3 = calc_ceme(histeq_2x3_result, k);
+    imwrite(uint8(histeq_2x3_img_t),"results/histeq_2x3_img_t.jpg");
     imwrite(uint8(histeq_2x3_result),"results/histeq_2x3_result.jpg");
 
     histeq_4x1_img_t = histeq(uint8( img_t_4x1))*255;
@@ -404,6 +420,7 @@ function calc_all_histogram_equalization_enhancement(input_img, k=4)
     eme_original_4x1 = calc_eme(img_t_4x1, k);
     eme_histeq_4x1 = calc_eme(histeq_4x1_img_t, k);
     ceme_4x1 = calc_ceme(histeq_4x1_result, k);
+    imwrite(uint8(histeq_4x1_img_t),"results/histeq_4x1_img_t.jpg");
     imwrite(uint8(histeq_4x1_result),"results/histeq_4x1_result.jpg");
 
     histeq_1x4_img_t = histeq(uint8( img_t_1x4))*255;
@@ -411,6 +428,7 @@ function calc_all_histogram_equalization_enhancement(input_img, k=4)
     eme_original_1x4 = calc_eme(img_t_1x4, k);
     eme_histeq_1x4 = calc_eme(histeq_1x4_img_t, k);
     ceme_1x4 = calc_ceme(histeq_1x4_result, k);
+    imwrite(uint8(histeq_1x4_img_t),"results/histeq_1x4_img_t.jpg");
     imwrite(uint8(histeq_1x4_result),"results/histeq_1x4_result.jpg");
 
     printf("################ Histogram equalization enhancement ################\n");
